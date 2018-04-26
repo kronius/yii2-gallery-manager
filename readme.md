@@ -1,3 +1,8 @@
+#fork tasks
+
+- galleryBehavior getImages add params for limit ( may be randomise )
+- upload multiple files implementation
+
 # Gallery Manager usage instructions
 
 Yii2 port of https://github.com/zxbodya/yii-gallery-manager
