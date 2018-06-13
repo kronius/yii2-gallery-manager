@@ -1,5 +1,5 @@
 {
-    "name": "zxbodya/yii2-gallery-manager",
+    "name": "kronius/yii2-gallery-manager",
     "description": "Extension for yii, that allows to manage image galleries",
     "type": "yii2-extension",
     "keywords": [
@@ -11,8 +11,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Bogdan Savluk",
-            "email": "savluk.bogdan@gmail.com"
+            "name": "Ivan Borodai",
+            "email": "ia.boroday@gmail.com"
         }
     ],
     "require": {
