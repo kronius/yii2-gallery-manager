@@ -9,6 +9,7 @@ use yii\base\Exception;
 use yii\db\ActiveRecord;
 use yii\db\Query;
 use yii\imagine\Image;
+use yii\web\UploadedFile;
 
 /**
  * Behavior for adding gallery to any model.
@@ -324,6 +325,15 @@ class GalleryBehavior extends Behavior
         }
     }
 
+    protected function getRankFromFileName($fileName, $id=false){
+        if(\method_exists($this->owner, 'getImageRank'))
+            return $this->owner->getImageRank($fileName, $id);
+
+        $rega = '~\d+~';
+        if(!preg_match_all($rega, $fileName, $m)) return false;
+        return implode('', $m[0]);
+    }
+
     public function addImage($fileName)
     {
         $db = \Yii::$app->db;
@@ -335,12 +345,20 @@ class GalleryBehavior extends Behavior
                     'ownerId' => $this->getGalleryId()
                 ]
             )->execute();
-
+        
+        $imageFile = UploadedFile::getInstanceByName('gallery-image');
+        $fnm = $imageFile->name;
+        
+        $rank = $this->getRankFromFileName($fnm);
+        
         $id = $db->getLastInsertID('gallery_image_id_seq');
+        
+        if(empty($rank)) $rank = $id;
+
         $db->createCommand()
             ->update(
                 $this->tableName,
-                ['rank' => $id],
+                ['rank' => $rank],
                 ['id' => $id]
             )->execute();
 
